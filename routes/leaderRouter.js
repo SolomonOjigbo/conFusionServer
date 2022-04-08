@@ -12,7 +12,7 @@ const leaderRouter = express.Router();
 leaderRouter.use(bodyParser.json());
 
 leaderRouter.route('/')
-.get(authenticate.verifyUser, (req,res,next) => {
+.get((req,res,next) => {
     Leaders.find({})
     .then((leaders) => {
          res.statusCode = 200;
@@ -31,7 +31,7 @@ leaderRouter.route('/')
     }, (err) => next(err)) 
     .catch((err) => next(err));
 }) 
-.put((req,res,next) => {
+.put(authenticate.verifyUser, (req,res,next) => {
     res.statusCode = 403;
     res.end('PUT operation not supported on /leaders'); 
 })
@@ -46,7 +46,7 @@ leaderRouter.route('/')
 });
 
 leaderRouter.route('/:leaderId')
-.get(authenticate.verifyUser, (req,res,next) => {
+.get((req,res,next) => {
     Leaders.findById(req.params.leaderId)
     .then((leader) => {
         res.statusCode = 200;
@@ -55,7 +55,7 @@ leaderRouter.route('/:leaderId')
    }, (err) => next(err))
    .catch((err) => next(err));
 })
-.post((req,res,next) => {
+.post(authenticate.verifyUser, (req,res,next) => {
     res.statusCode = 403;
     res.end('POST operation not supported on /leaders/ '
     + req.params.leaderId);

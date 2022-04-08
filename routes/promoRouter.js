@@ -11,7 +11,7 @@ const promoRouter = express.Router();
 promoRouter.use(bodyParser.json());
 
 promoRouter.route('/')
-.get(authenticate.verifyUser, (req,res,next) => {
+.get((req,res,next) => {
     Promotions.find({})
     .then((promos) => {
          res.statusCode = 200;
@@ -30,7 +30,7 @@ promoRouter.route('/')
     }, (err) => next(err)) 
     .catch((err) => next(err));
 })
-.put((req,res,next) => {
+.put(authenticate.verifyUser, (req,res,next) => {
     res.statusCode = 403;
     res.end('PUT operation not supported on /promotions'); 
 })
@@ -45,7 +45,7 @@ promoRouter.route('/')
 });
 
 promoRouter.route('/:promoId')
-.get(authenticate.verifyUser, (req,res,next) => {
+.get((req,res,next) => {
     Promotions.findById(req.params.promoId)
     .then((promo) => {
         res.statusCode = 200;
@@ -54,7 +54,7 @@ promoRouter.route('/:promoId')
    }, (err) => next(err))
    .catch((err) => next(err));
 })
-.post((req,res,next) => {
+.post(authenticate.verifyUser, (req,res,next) => {
     res.statusCode = 403;
     res.end('POST operation not supported on /promotions/ '
     + req.params.promoId);
