@@ -11,10 +11,10 @@ router.use(bodyParser.json());
 /* GET users listing. */
 router.get('/', authenticate.verifyAdmin, (req, res, next) => {
     User.find({})
-    .then((users) => {
+    .then((user) => {
          res.statusCode = 200;
          res.setHeader('Content-Type', 'application/json');
-         res.json(users);
+         res.json(user);
     }, (err) => next(err))
     .catch((err) => next(err));
 });

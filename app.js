@@ -14,8 +14,10 @@ var usersRouter = require('./routes/users');
 var dishRouter = require('./routes/dishRouter');
 var promoRouter = require('./routes/promoRouter');
 var leaderRouter = require('./routes/leaderRouter');
+const uploadRouter = require('./routes/uploadRouter');
 
 const mongoose = require('mongoose');
+mongoose.Promise = require('bluebird');
 
 const Dishes = require('./models/dishes');
 const Promotions = require('./models/promotions');
@@ -59,11 +61,12 @@ app.use(express.urlencoded({ extended: false }));
 // }));
 
 app.use(passport.initialize());
-app.use(passport.session());
+// app.use(passport.session());
 
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/imageUpload', uploadRouter);
 
 app.use(express.static(path.join(__dirname, 'public')));
 
