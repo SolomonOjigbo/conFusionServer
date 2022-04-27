@@ -6,6 +6,8 @@ const Promotions = require('../models/promotions');
 
 const authenticate = require('../authenticate');
 
+const cors = require('./cors');
+
 const promoRouter = express.Router();
 
 promoRouter.use(bodyParser.json());
